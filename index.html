@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arte Digital | Sorteo Exclusivo</title>
+
+  <style>
+    :root {
+      --bg: #070713;
+      --bg-soft: #101024;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --text: #ffffff;
+      --muted: #b8b8d4;
+      --primary: #7c3cff;
+      --secondary: #00d4ff;
+      --accent: #ffcc70;
+      --danger: #ff5c7a;
+      --success: #45f0a3;
+      --radius: 22px;
+      --shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(124, 60, 255, 0.35), transparent 35%),
+        radial-gradient(circle at top right, rgba(0, 212, 255, 0.25), transparent 30%),
+        linear-gradient(135deg, #050510, #0b0b1f 45%, #090916);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px);
+      background: rgba(7, 7, 19, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .navbar {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, var(--primary), var(--secondary));
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 25px rgba(124, 60, 255, 0.55);
+    }
+
+    .logo-mark span {
+      font-size: 22px;
+    }
+
+    .logo small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 12px 30px rgba(0, 212, 255, 0.2);
+    }
+
+    .hero {
+      padding: 86px 0 60px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 22px;
+    }
+
+    .badge strong {
+      color: var(--success);
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: 0.95;
+      letter-spacing: -3px;
+      margin-bottom: 22px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff, #a98cff, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 620px;
+      margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 15px 22px;
+      font-weight: 800;
+      font-size: 15px;
+      transition: 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      box-shadow: 0 18px 40px rgba(124, 60, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 60px rgba(0, 212, 255, 0.28);
+    }
+
+    .btn-secondary {
+      color: white;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.13);
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: 34px;
+      padding: 24px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -80px;
+      background:
+        radial-gradient(circle, rgba(0, 212, 255, 0.24), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(124, 60, 255, 0.25), transparent 35%);
+      z-index: 0;
+      animation: glowMove 7s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowMove {
+      from { transform: translate(-20px, -10px) rotate(0deg); }
+      to { transform: translate(25px, 20px) rotate(12deg); }
+    }
+
+    .featured-art {
+      position: relative;
+      z-index: 1;
+      min-height: 520px;
+      border-radius: 28px;
+      background:
+        linear-gradient(135deg, rgba(124, 60, 255, 0.35), rgba(0, 212, 255, 0.25)),
+        url("https://images.unsplash.com/photo-1634986666676-ec8fd927c23d?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .featured-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88), transparent 60%);
+    }
+
+    .featured-info {
+      position: relative;
+      z-index: 2;
+      padding: 28px;
+      width: 100%;
+    }
+
+    .featured-info h2 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .featured-info p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 18px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .time-box strong {
+      display: block;
+      font-size: 25px;
+    }
+
+    .time-box span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    section {
+      padding: 70px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 32px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(32px, 4vw, 52px);
+      letter-spacing: -1.5px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .step-card,
+    .art-card,
+    .terms-box,
+    .admin-preview {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .step-card {
+      padding: 28px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      margin-bottom: 22px;
+    }
+
+    .step-card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+
+    .step-card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .art-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .art-card {
+      overflow: hidden;
+      transition: 0.25s ease;
+    }
+
+    .art-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(0, 212, 255, 0.45);
+    }
+
+    .art-image {
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+
+    .art-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent 60%);
+    }
+
+    .art-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      z-index: 2;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .art-content {
+      padding: 22px;
+    }
+
+    .art-content h3 {
+      font-size: 23px;
+      margin-bottom: 8px;
+    }
+
+    .art-content p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .price {
+      font-size: 28px;
+      font-weight: 900;
+      color: white;
+    }
+
+    .entries {
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .full-btn {
+      width: 100%;
+    }
+
+    .admin-preview {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .dashboard {
+      background: rgba(0, 0, 0, 0.28);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 18px;
+    }
+
+    .dashboard-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .dot-group {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .dash-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 14px;
+      margin-bottom: 10px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .dash-row strong {
+      color: white;
+    }
+
+    .terms-box {
+      padding: 30px;
+    }
+
+    .terms-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .term-item {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .term-item h4 {
+      margin-bottom: 8px;
+    }
+
+    .term-item p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 90px 0;
+    }
+
+    .cta-box {
+      border-radius: 34px;
+      padding: 60px 28px;
+      background:
+        linear-gradient(135deg, rgba(124, 60, 255, 0.25), rgba(0, 212, 255, 0.18)),
+        rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-box h2 {
+      font-size: clamp(34px, 5vw, 58px);
+      letter-spacing: -2px;
+      margin-bottom: 18px;
+    }
+
+    .cta-box p {
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 28px;
+      line-height: 1.8;
+    }
+
+    footer {
+      padding: 34px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,0.74);
+      backdrop-filter: blur(14px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(520px, 100%);
+      background: #111127;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      position: relative;
+      animation: pop 0.25s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.94); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .close-modal {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      font-size: 22px;
+    }
+
+    .modal-card h3 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      padding-right: 38px;
+    }
+
+    .modal-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 7px;
+      font-weight: 700;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 14px 15px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.07);
+      color: white;
+      outline: none;
+    }
+
+    .form-group input::placeholder {
+      color: rgba(255,255,255,0.45);
+    }
+
+    .notice {
+      background: rgba(255, 204, 112, 0.1);
+      border: 1px solid rgba(255, 204, 112, 0.25);
+      color: #ffe1a3;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 15px 0;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 16px 0;
+    }
+
+    .checkbox-row input {
+      margin-top: 3px;
+      accent-color: var(--primary);
+    }
+
+    .stripe-demo {
+      background: #635bff !important;
+      color: white;
+    }
+
+    .mobile-menu {
+      display: none;
+      border: none;
+      background: rgba(255,255,255,0.08);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .admin-preview {
+        grid-template-columns: 1fr;
+      }
+
+      .steps,
+      .art-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .featured-art {
+        min-height: 430px;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 78px;
+        left: 0;
+        right: 0;
+        padding: 20px;
+        background: rgba(7, 7, 19, 0.96);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        flex-direction: column;
+        align-items: stretch;
+        display: none;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .hero {
+        padding-top: 55px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .countdown {
+        grid-template-columns: 1fr;
+      }
+
+      .terms-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-info h2 {
+        font-size: 28px;
+      }
+
+      .navbar {
+        height: 70px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="container navbar">
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <span>✦</span>
+        </div>
+        <div>
+          ArteRaffle
+          <small>Digital Art Experience</small>
+        </div>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#artes">Artes</a>
+        <a href="#admin">Sistema</a>
+        <a href="#terminos">Términos</a>
+        <a href="#artes" class="nav-cta">Participar</a>
+      </nav>
+
+      <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container hero-grid">
+
+        <div>
+          <div class="badge">
+            <strong>Activo</strong> Sorteo digital con compra segura
+          </div>
+
+          <h1>
+            Compra arte digital y participa por una pieza exclusiva
+            <span class="gradient-text">de colección.</span>
+          </h1>
+
+          <p>
+            Plataforma demo para vender artes digitales, registrar compradores,
+            generar códigos de participación y conectar pagos seguros mediante Stripe.
+            Ideal para artistas, marcas creativas y campañas promocionales.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#artes" class="btn btn-primary">Ver artes disponibles</a>
+            <a href="#como-funciona" class="btn btn-secondary">Cómo funciona</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="featured-art">
+            <div class="featured-info">
+              <h2>Premio Especial</h2>
+              <p>
+                Arte digital personalizado en alta resolución, creado exclusivamente
+                para el ganador.
+              </p>
+
+              <button class="btn btn-primary" onclick="openModal('Premio Especial', '10')">
+                Participar desde $10
+              </button>
+
+              <div class="countdown">
+                <div class="time-box">
+                  <strong id="days">00</strong>
+                  <span>Días</span>
+                </div>
+                <div class="time-box">
+                  <strong id="hours">00</strong>
+                  <span>Horas</span>
+                </div>
+                <div class="time-box">
+                  <strong id="minutes">00</strong>
+                  <span>Minutos</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="como-funciona">
+      <div class="container">
+        <div class="section-head">
+          <h2>Cómo funciona</h2>
+          <p>
+            Un flujo simple para el comprador y organizado para el administrador.
+            Este demo presenta el concepto antes de conectar Stripe real.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Elige un arte</h3>
+            <p>
+              El cliente selecciona una pieza digital disponible en la galería.
+              Cada compra puede incluir una o varias participaciones.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Paga con Stripe</h3>
+            <p>
+              El sistema redirige al comprador a Stripe Checkout para completar
+              el pago de forma segura.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Recibe su código</h3>
+            <p>
+              Después del pago, el comprador recibe confirmación, su arte digital
+              y su código de participación.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="artes">
+      <div class="container">
+        <div class="section-head">
+          <h2>Artes disponibles</h2>
+          <p>
+            Esta sección puede conectarse luego a Firebase para que el cliente
+            pueda subir, editar y activar nuevas piezas desde un panel admin.
+          </p>
+        </div>
+
+        <div class="art-grid">
+
+          <article class="art-card">
+            <div class="art-image" style="background-image: url('https://images.unsplash.com/photo-1635322966219-b75ed372eb01?auto=format&fit=crop&w=900&q=80');">
+              <div class="art-tag">Arte Digital</div>
+            </div>
+            <div class="art-content">
+              <h3>Neon Dreams</h3>
+              <p>
+                Pieza futurista en alta resolución con estilo neón, ideal para
+                fondos, colección digital o impresión personal.
+              </p>
+              <div class="price-row">
+                <div class="price">$5</div>
+                <div class="entries">1 participación</div>
+              </div>
+              <button class="btn btn-primary full-btn" onclick="openModal('Neon Dreams', '5')">
+                Comprar con Stripe
+              </button>
+            </div>
+          </article>
+
+          <article class="art-card">
+            <div class="art-image" style="background-image: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&w=900&q=80');">
+              <div class="art-tag">Colección</div>
+            </div>
+            <div class="art-content">
+              <h3>Cosmic Flow</h3>
+              <p>
+                Arte abstracto con profundidad visual, colores vibrantes y acabado
+                premium para compradores digitales.
+              </p>
+              <div class="price-row">
+                <div class="price">$10</div>
+                <div class="entries">3 participaciones</div>
+              </div>
+              <button class="btn btn-primary full-btn" onclick="openModal('Cosmic Flow', '10')">
+                Comprar con Stripe
+              </button>
+            </div>
+          </article>
+
+          <article class="art-card">
+            <div class="art-image" style="background-image: url('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=900&q=80');">
+              <div class="art-tag">Premium</div>
+            </div>
+            <div class="art-content">
+              <h3>Golden Future</h3>
+              <p>
+                Arte digital premium con estilo elegante, detalles metálicos y
+                descarga en alta calidad.
+              </p>
+              <div class="price-row">
+                <div class="price">$20</div>
+                <div class="entries">7 participaciones</div>
+              </div>
+              <button class="btn btn-primary full-btn" onclick="openModal('Golden Future', '20')">
+                Comprar con Stripe
+              </button>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="admin">
+      <div class="container">
+        <div class="admin-preview">
+          <div>
+            <div class="badge">
+              <strong>Admin</strong> Panel de control
+            </div>
+
+            <h2 style="font-size: clamp(32px, 4vw, 52px); letter-spacing: -1.5px; margin-bottom: 18px;">
+              Control completo para el dueño del sorteo
+            </h2>
+
+            <p style="color: var(--muted); line-height: 1.8; margin-bottom: 24px;">
+              El cliente puede tener un panel privado para ver compras, participantes,
+              códigos generados, pagos confirmados, artes vendidas y seleccionar el
+              ganador del sorteo.
+            </p>
+
+            <a href="#terminos" class="btn btn-secondary">Ver reglas del demo</a>
+          </div>
+
+          <div class="dashboard">
+            <div class="dashboard-top">
+              <strong>Panel Admin</strong>
+              <div class="dot-group">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+              </div>
+            </div>
+
+            <div class="dash-row">
+              <span>Órdenes pagadas</span>
+              <strong>128</strong>
+            </div>
+
+            <div class="dash-row">
+              <span>Participaciones activas</span>
+              <strong>352</strong>
+            </div>
+
+            <div class="dash-row">
+              <span>Total vendido</span>
+              <strong>$1,840</strong>
+            </div>
+
+            <div class="dash-row">
+              <span>Fecha del sorteo</span>
+              <strong>31 mayo</strong>
+            </div>
+
+            <div class="dash-row">
+              <span>Estado</span>
+              <strong style="color: var(--success);">Activo</strong>
+            </div>
+
+            <button class="btn btn-primary full-btn" style="margin-top: 12px;" onclick="demoWinner()">
+              Simular selección de ganador
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="terminos">
+      <div class="container">
+        <div class="terms-box">
+          <div class="section-head" style="margin-bottom: 10px;">
+            <h2>Términos del demo</h2>
+            <p>
+              Esta parte debe ser revisada legalmente antes de publicar una versión real
+              con pagos activos.
+            </p>
+          </div>
+
+          <div class="terms-grid">
+            <div class="term-item">
+              <h4>Producto digital</h4>
+              <p>
+                El comprador adquiere un arte digital descargable. La participación
+                promocional se muestra como parte del concepto demo.
+              </p>
+            </div>
+
+            <div class="term-item">
+              <h4>Pagos</h4>
+              <p>
+                En producción, los pagos se procesarían mediante Stripe Checkout
+                usando un backend seguro.
+              </p>
+            </div>
+
+            <div class="term-item">
+              <h4>Confirmación</h4>
+              <p>
+                La participación se activaría únicamente después de que Stripe confirme
+                el pago mediante webhook.
+              </p>
+            </div>
+
+            <div class="term-item">
+              <h4>Legal</h4>
+              <p>
+                El cliente debe validar reglas, permisos, restricciones y cumplimiento
+                antes de operar sorteos públicos.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Listo para conectar pagos reales</h2>
+          <p>
+            Esta demo puede evolucionar a una plataforma funcional con Stripe,
+            Firebase, panel administrativo, emails automáticos, códigos únicos
+            y selección de ganador.
+          </p>
+          <button class="btn btn-primary" onclick="openModal('Demo Stripe Checkout', '10')">
+            Probar flujo de compra
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      © 2026 ArteRaffle Demo. Plataforma demostrativa para venta de artes digitales y promociones.
+      <br />
+      Desarrollado como demo profesional para presentación al cliente.
+    </div>
+  </footer>
+
+  <div class="modal" id="purchaseModal">
+    <div class="modal-card">
+      <button class="close-modal" onclick="closeModal()">×</button>
+
+      <h3 id="modalTitle">Comprar arte digital</h3>
+      <p>
+        Completa la información para simular el flujo. En la versión real,
+        este botón enviaría al cliente a Stripe Checkout.
+      </p>
+
+      <form onsubmit="fakeStripeCheckout(event)">
+        <div class="form-group">
+          <label>Nombre completo</label>
+          <input type="text" id="customerName" placeholder="Ej. Juan Pérez" required />
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="customerEmail" placeholder="cliente@email.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>Teléfono</label>
+          <input type="tel" id="customerPhone" placeholder="787-000-0000" required />
+        </div>
+
+        <div class="form-group">
+          <label>Cantidad</label>
+          <select id="quantity">
+            <option value="1">1 compra</option>
+            <option value="2">2 compras</option>
+            <option value="3">3 compras</option>
+            <option value="5">5 compras</option>
+          </select>
+        </div>
+
+        <div class="notice">
+          Demo visual: este formulario no procesa pagos reales. Para producción
+          se conecta con Stripe Checkout desde un backend seguro.
+        </div>
+
+        <label class="checkbox-row">
+          <input type="checkbox" required />
+          <span>
+            Confirmo que acepto los términos del demo y entiendo que esta versión
+            es solo para presentación.
+          </span>
+        </label>
+
+        <button type="submit" class="btn full-btn stripe-demo">
+          Continuar a Stripe — $<span id="modalPrice">0</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let selectedProduct = "";
+    let selectedPrice = 0;
+
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("active");
+    }
+
+    function openModal(productName, price) {
+      selectedProduct = productName;
+      selectedPrice = Number(price);
+
+      document.getElementById("modalTitle").textContent = "Comprar: " + productName;
+      document.getElementById("modalPrice").textContent = selectedPrice.toFixed(2);
+      document.getElementById("purchaseModal").classList.add("active");
+    }
+
+    function closeModal() {
+      document.getElementById("purchaseModal").classList.remove("active");
+    }
+
+    document.getElementById("quantity").addEventListener("change", function () {
+      const quantity = Number(this.value);
+      document.getElementById("modalPrice").textContent = (selectedPrice * quantity).toFixed(2);
+    });
+
+    function fakeStripeCheckout(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("customerName").value;
+      const email = document.getElementById("customerEmail").value;
+      const phone = document.getElementById("customerPhone").value;
+      const quantity = Number(document.getElementById("quantity").value);
+      const total = selectedPrice * quantity;
+
+      const entryCode = "ART-" + Math.floor(100000 + Math.random() * 900000);
+
+      alert(
+        "DEMO STRIPE CHECKOUT\\n\\n" +
+        "Producto: " + selectedProduct + "\\n" +
+        "Cliente: " + name + "\\n" +
+        "Email: " + email + "\\n" +
+        "Teléfono: " + phone + "\\n" +
+        "Cantidad: " + quantity + "\\n" +
+        "Total: $" + total.toFixed(2) + "\\n" +
+        "Código demo: " + entryCode + "\\n\\n" +
+        "En la versión real, aquí se redirige a Stripe Checkout."
+      );
+
+      closeModal();
+    }
+
+    function demoWinner() {
+      const fakeCodes = ["ART-482910", "ART-105882", "ART-778201", "ART-640992", "ART-349102"];
+      const winner = fakeCodes[Math.floor(Math.random() * fakeCodes.length)];
+
+      alert(
+        "Ganador seleccionado en demo:\\n\\n" +
+        winner + "\\n\\n" +
+        "En la versión real, el sistema escogería entre participaciones pagadas y confirmadas."
+      );
+    }
+
+    function updateCountdown() {
+      const drawDate = new Date("May 31, 2026 20:00:00").getTime();
+      const now = new Date().getTime();
+      const distance = drawDate - now;
+
+      if (distance <= 0) {
+        document.getElementById("days").textContent = "00";
+        document.getElementById("hours").textContent = "00";
+        document.getElementById("minutes").textContent = "00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((distance / (1000 * 60)) % 60);
+
+      document.getElementById("days").textContent = String(days).padStart(2, "0");
+      document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+      document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
+
+    window.addEventListener("click", function (e) {
+      const modal = document.getElementById("purchaseModal");
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+</html>
