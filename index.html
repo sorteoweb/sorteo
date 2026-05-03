@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Arte Digital | Sorteo Exclusivo</title>
+
+  <title>ArteRaffle Demo | Sorteo de Artes Digitales</title>
 
   <style>
     :root {
@@ -44,13 +45,15 @@
     }
 
     a {
-      text-decoration: none;
       color: inherit;
+      text-decoration: none;
     }
 
-    img {
-      width: 100%;
-      display: block;
+    button,
+    input,
+    textarea,
+    select {
+      font-family: inherit;
     }
 
     .container {
@@ -79,7 +82,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -0.5px;
     }
 
@@ -87,8 +90,7 @@
       width: 44px;
       height: 44px;
       border-radius: 14px;
-      background:
-        linear-gradient(135deg, var(--primary), var(--secondary));
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       display: grid;
       place-items: center;
       box-shadow: 0 0 25px rgba(124, 60, 255, 0.55);
@@ -109,7 +111,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 22px;
       color: var(--muted);
       font-size: 15px;
     }
@@ -123,12 +125,24 @@
       color: white;
       padding: 12px 18px;
       border-radius: 999px;
-      font-weight: 700;
+      font-weight: 800;
       box-shadow: 0 12px 30px rgba(0, 212, 255, 0.2);
     }
 
+    .mobile-menu {
+      display: none;
+      border: none;
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
     .hero {
-      padding: 86px 0 60px;
+      padding: 86px 0 55px;
     }
 
     .hero-grid {
@@ -188,7 +202,7 @@
       cursor: pointer;
       border-radius: 999px;
       padding: 15px 22px;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 15px;
       transition: 0.25s ease;
       display: inline-flex;
@@ -218,6 +232,21 @@
       background: rgba(255, 255, 255, 0.13);
     }
 
+    .btn-danger {
+      color: white;
+      background: rgba(255, 92, 122, 0.18);
+      border: 1px solid rgba(255, 92, 122, 0.35);
+    }
+
+    .btn-small {
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+
+    .full-btn {
+      width: 100%;
+    }
+
     .hero-card {
       position: relative;
       border-radius: 34px;
@@ -228,25 +257,8 @@
       overflow: hidden;
     }
 
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset: -80px;
-      background:
-        radial-gradient(circle, rgba(0, 212, 255, 0.24), transparent 30%),
-        radial-gradient(circle at bottom right, rgba(124, 60, 255, 0.25), transparent 35%);
-      z-index: 0;
-      animation: glowMove 7s ease-in-out infinite alternate;
-    }
-
-    @keyframes glowMove {
-      from { transform: translate(-20px, -10px) rotate(0deg); }
-      to { transform: translate(25px, 20px) rotate(12deg); }
-    }
-
     .featured-art {
       position: relative;
-      z-index: 1;
       min-height: 520px;
       border-radius: 28px;
       background:
@@ -329,7 +341,7 @@
     .section-head p {
       color: var(--muted);
       line-height: 1.7;
-      max-width: 560px;
+      max-width: 580px;
     }
 
     .steps {
@@ -340,8 +352,10 @@
 
     .step-card,
     .art-card,
+    .admin-panel,
     .terms-box,
-    .admin-preview {
+    .stat-card,
+    .empty-state {
       background: var(--card);
       border: 1px solid var(--card-border);
       border-radius: var(--radius);
@@ -372,6 +386,28 @@
     .step-card p {
       color: var(--muted);
       line-height: 1.7;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      padding: 22px;
+    }
+
+    .stat-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 32px;
+      margin-top: 8px;
     }
 
     .art-grid {
@@ -414,7 +450,33 @@
       background: rgba(0, 0, 0, 0.45);
       border: 1px solid rgba(255, 255, 255, 0.18);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
+    }
+
+    .stock-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      z-index: 2;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(69, 240, 163, 0.14);
+      border: 1px solid rgba(69, 240, 163, 0.35);
+      color: #b9ffdf;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .stock-badge.low {
+      background: rgba(255, 204, 112, 0.14);
+      border-color: rgba(255, 204, 112, 0.35);
+      color: #ffe1a3;
+    }
+
+    .stock-badge.sold {
+      background: rgba(255, 92, 122, 0.14);
+      border-color: rgba(255, 92, 122, 0.35);
+      color: #ffb6c4;
     }
 
     .art-content {
@@ -449,61 +511,129 @@
     .entries {
       color: var(--accent);
       font-size: 13px;
+      font-weight: 900;
+    }
+
+    .disabled {
+      opacity: 0.55;
+      pointer-events: none;
+      filter: grayscale(0.4);
+    }
+
+    .empty-state {
+      padding: 35px;
+      text-align: center;
+      color: var(--muted);
+      grid-column: 1 / -1;
+    }
+
+    .admin-panel {
+      padding: 28px;
+    }
+
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .admin-form {
+      background: rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 22px;
+    }
+
+    .admin-form h3,
+    .admin-list h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 7px;
       font-weight: 800;
     }
 
-    .full-btn {
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
+      padding: 14px 15px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.07);
+      color: white;
+      outline: none;
     }
 
-    .admin-preview {
-      padding: 28px;
+    .form-group textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.45);
+    }
+
+    .form-row {
       display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 28px;
-      align-items: center;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
     }
 
-    .dashboard {
-      background: rgba(0, 0, 0, 0.28);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 24px;
-      padding: 18px;
+    .admin-list {
+      display: grid;
+      gap: 12px;
     }
 
-    .dashboard-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
-    }
-
-    .dot-group {
-      display: flex;
-      gap: 7px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-    }
-
-    .dash-row {
+    .admin-item {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 15px;
       display: grid;
       grid-template-columns: 1fr auto;
-      gap: 12px;
-      padding: 14px;
-      margin-bottom: 10px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--muted);
-      font-size: 14px;
+      gap: 15px;
+      align-items: center;
     }
 
-    .dash-row strong {
-      color: white;
+    .admin-item h4 {
+      margin-bottom: 6px;
+      font-size: 17px;
+    }
+
+    .admin-item p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .admin-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .notice {
+      background: rgba(255, 204, 112, 0.1);
+      border: 1px solid rgba(255, 204, 112, 0.25);
+      color: #ffe1a3;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 18px;
     }
 
     .terms-box {
@@ -598,8 +728,15 @@
     }
 
     @keyframes pop {
-      from { transform: scale(0.94); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(0.94);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
 
     .close-modal {
@@ -628,44 +765,6 @@
       margin-bottom: 20px;
     }
 
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-group label {
-      display: block;
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 7px;
-      font-weight: 700;
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 14px 15px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.07);
-      color: white;
-      outline: none;
-    }
-
-    .form-group input::placeholder {
-      color: rgba(255,255,255,0.45);
-    }
-
-    .notice {
-      background: rgba(255, 204, 112, 0.1);
-      border: 1px solid rgba(255, 204, 112, 0.25);
-      color: #ffe1a3;
-      padding: 14px;
-      border-radius: 16px;
-      font-size: 13px;
-      line-height: 1.5;
-      margin: 15px 0;
-    }
-
     .checkbox-row {
       display: flex;
       align-items: flex-start;
@@ -686,27 +785,16 @@
       color: white;
     }
 
-    .mobile-menu {
-      display: none;
-      border: none;
-      background: rgba(255,255,255,0.08);
-      color: white;
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      font-size: 22px;
-      cursor: pointer;
-    }
-
-    @media (max-width: 920px) {
+    @media (max-width: 980px) {
       .hero-grid,
-      .admin-preview {
+      .admin-layout {
         grid-template-columns: 1fr;
       }
 
       .steps,
-      .art-grid {
-        grid-template-columns: 1fr;
+      .art-grid,
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
       }
 
       .section-head {
@@ -740,7 +828,7 @@
       }
     }
 
-    @media (max-width: 540px) {
+    @media (max-width: 640px) {
       .hero {
         padding-top: 55px;
       }
@@ -758,12 +846,21 @@
         width: 100%;
       }
 
-      .countdown {
+      .countdown,
+      .terms-grid,
+      .steps,
+      .art-grid,
+      .stats-grid,
+      .form-row {
         grid-template-columns: 1fr;
       }
 
-      .terms-grid {
+      .admin-item {
         grid-template-columns: 1fr;
+      }
+
+      .admin-actions {
+        justify-content: stretch;
       }
 
       .featured-info h2 {
@@ -794,7 +891,7 @@
       <nav class="nav-links" id="navLinks">
         <a href="#como-funciona">Cómo funciona</a>
         <a href="#artes">Artes</a>
-        <a href="#admin">Sistema</a>
+        <a href="#admin">Panel Admin</a>
         <a href="#terminos">Términos</a>
         <a href="#artes" class="nav-cta">Participar</a>
       </nav>
@@ -810,7 +907,7 @@
 
         <div>
           <div class="badge">
-            <strong>Activo</strong> Sorteo digital con compra segura
+            <strong>Demo activo</strong> Inventario visual actualizado en vivo
           </div>
 
           <h1>
@@ -819,14 +916,14 @@
           </h1>
 
           <p>
-            Plataforma demo para vender artes digitales, registrar compradores,
-            generar códigos de participación y conectar pagos seguros mediante Stripe.
-            Ideal para artistas, marcas creativas y campañas promocionales.
+            Demo profesional para vender artes digitales, mostrar disponibilidad,
+            simular pagos con Stripe, registrar compras y permitir que el cliente
+            administre sus artes desde un panel visual.
           </p>
 
           <div class="hero-actions">
             <a href="#artes" class="btn btn-primary">Ver artes disponibles</a>
-            <a href="#como-funciona" class="btn btn-secondary">Cómo funciona</a>
+            <a href="#admin" class="btn btn-secondary">Abrir panel admin</a>
           </div>
         </div>
 
@@ -839,9 +936,9 @@
                 para el ganador.
               </p>
 
-              <button class="btn btn-primary" onclick="openModal('Premio Especial', '10')">
-                Participar desde $10
-              </button>
+              <a href="#artes" class="btn btn-primary">
+                Participar desde la galería
+              </a>
 
               <div class="countdown">
                 <div class="time-box">
@@ -869,8 +966,8 @@
         <div class="section-head">
           <h2>Cómo funciona</h2>
           <p>
-            Un flujo simple para el comprador y organizado para el administrador.
-            Este demo presenta el concepto antes de conectar Stripe real.
+            El comprador ve cuántas piezas quedan disponibles. El admin puede añadir
+            nuevas artes y modificar inventario desde el panel del demo.
           </p>
         </div>
 
@@ -879,26 +976,26 @@
             <div class="step-number">1</div>
             <h3>Elige un arte</h3>
             <p>
-              El cliente selecciona una pieza digital disponible en la galería.
-              Cada compra puede incluir una o varias participaciones.
+              El comprador selecciona una pieza digital disponible en la galería.
+              Cada arte muestra su inventario actual.
             </p>
           </div>
 
           <div class="step-card">
             <div class="step-number">2</div>
-            <h3>Paga con Stripe</h3>
+            <h3>Simula Stripe</h3>
             <p>
-              El sistema redirige al comprador a Stripe Checkout para completar
-              el pago de forma segura.
+              El formulario muestra cómo sería el flujo de pago. En producción,
+              se conecta con Stripe Checkout real.
             </p>
           </div>
 
           <div class="step-card">
             <div class="step-number">3</div>
-            <h3>Recibe su código</h3>
+            <h3>Actualiza disponibilidad</h3>
             <p>
-              Después del pago, el comprador recibe confirmación, su arte digital
-              y su código de participación.
+              Al completar una compra demo, el sistema descuenta la cantidad
+              disponible y actualiza la galería al momento.
             </p>
           </div>
         </div>
@@ -910,136 +1007,116 @@
         <div class="section-head">
           <h2>Artes disponibles</h2>
           <p>
-            Esta sección puede conectarse luego a Firebase para que el cliente
-            pueda subir, editar y activar nuevas piezas desde un panel admin.
+            Inventario conectado al panel admin del demo. Los cambios se guardan en
+            este navegador usando localStorage.
           </p>
         </div>
 
-        <div class="art-grid">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span>Total de artes</span>
+            <strong id="statTotalArts">0</strong>
+          </div>
 
-          <article class="art-card">
-            <div class="art-image" style="background-image: url('https://images.unsplash.com/photo-1635322966219-b75ed372eb01?auto=format&fit=crop&w=900&q=80');">
-              <div class="art-tag">Arte Digital</div>
-            </div>
-            <div class="art-content">
-              <h3>Neon Dreams</h3>
-              <p>
-                Pieza futurista en alta resolución con estilo neón, ideal para
-                fondos, colección digital o impresión personal.
-              </p>
-              <div class="price-row">
-                <div class="price">$5</div>
-                <div class="entries">1 participación</div>
-              </div>
-              <button class="btn btn-primary full-btn" onclick="openModal('Neon Dreams', '5')">
-                Comprar con Stripe
-              </button>
-            </div>
-          </article>
+          <div class="stat-card">
+            <span>Piezas disponibles</span>
+            <strong id="statAvailable">0</strong>
+          </div>
 
-          <article class="art-card">
-            <div class="art-image" style="background-image: url('https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&w=900&q=80');">
-              <div class="art-tag">Colección</div>
-            </div>
-            <div class="art-content">
-              <h3>Cosmic Flow</h3>
-              <p>
-                Arte abstracto con profundidad visual, colores vibrantes y acabado
-                premium para compradores digitales.
-              </p>
-              <div class="price-row">
-                <div class="price">$10</div>
-                <div class="entries">3 participaciones</div>
-              </div>
-              <button class="btn btn-primary full-btn" onclick="openModal('Cosmic Flow', '10')">
-                Comprar con Stripe
-              </button>
-            </div>
-          </article>
+          <div class="stat-card">
+            <span>Piezas vendidas</span>
+            <strong id="statSold">0</strong>
+          </div>
 
-          <article class="art-card">
-            <div class="art-image" style="background-image: url('https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=900&q=80');">
-              <div class="art-tag">Premium</div>
-            </div>
-            <div class="art-content">
-              <h3>Golden Future</h3>
-              <p>
-                Arte digital premium con estilo elegante, detalles metálicos y
-                descarga en alta calidad.
-              </p>
-              <div class="price-row">
-                <div class="price">$20</div>
-                <div class="entries">7 participaciones</div>
-              </div>
-              <button class="btn btn-primary full-btn" onclick="openModal('Golden Future', '20')">
-                Comprar con Stripe
-              </button>
-            </div>
-          </article>
-
+          <div class="stat-card">
+            <span>Ventas demo</span>
+            <strong id="statSales">$0</strong>
+          </div>
         </div>
+
+        <div class="art-grid" id="artGrid"></div>
       </div>
     </section>
 
     <section id="admin">
       <div class="container">
-        <div class="admin-preview">
-          <div>
-            <div class="badge">
-              <strong>Admin</strong> Panel de control
-            </div>
+        <div class="section-head">
+          <h2>Panel Admin</h2>
+          <p>
+            Aquí el cliente puede añadir nuevas artes digitales, controlar la cantidad
+            disponible, eliminar elementos y ver cómo la web cambia en vivo.
+          </p>
+        </div>
 
-            <h2 style="font-size: clamp(32px, 4vw, 52px); letter-spacing: -1.5px; margin-bottom: 18px;">
-              Control completo para el dueño del sorteo
-            </h2>
-
-            <p style="color: var(--muted); line-height: 1.8; margin-bottom: 24px;">
-              El cliente puede tener un panel privado para ver compras, participantes,
-              códigos generados, pagos confirmados, artes vendidas y seleccionar el
-              ganador del sorteo.
-            </p>
-
-            <a href="#terminos" class="btn btn-secondary">Ver reglas del demo</a>
+        <div class="admin-panel">
+          <div class="notice">
+            Este panel es para demo. En una versión real, debe protegerse con login
+            y conectarse a Firebase para que los cambios sean visibles para todos los usuarios.
           </div>
 
-          <div class="dashboard">
-            <div class="dashboard-top">
-              <strong>Panel Admin</strong>
-              <div class="dot-group">
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-              </div>
+          <div class="admin-layout">
+            <div class="admin-form">
+              <h3>Añadir nuevo arte</h3>
+
+              <form id="adminForm">
+                <div class="form-group">
+                  <label>Nombre del arte</label>
+                  <input type="text" id="artTitle" placeholder="Ej. Neon Dreams" required />
+                </div>
+
+                <div class="form-group">
+                  <label>Descripción</label>
+                  <textarea id="artDescription" placeholder="Describe el arte digital..." required></textarea>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Precio</label>
+                    <input type="number" id="artPrice" placeholder="10" min="1" step="1" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Cantidad disponible</label>
+                    <input type="number" id="artStock" placeholder="25" min="1" step="1" required />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Participaciones</label>
+                    <input type="number" id="artEntries" placeholder="3" min="1" step="1" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label>Etiqueta</label>
+                    <input type="text" id="artTag" placeholder="Premium" required />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>URL de imagen</label>
+                  <input
+                    type="url"
+                    id="artImage"
+                    placeholder="https://images.unsplash.com/..."
+                    required
+                  />
+                </div>
+
+                <button type="submit" class="btn btn-primary full-btn">
+                  Añadir arte a la web
+                </button>
+              </form>
+
+              <button class="btn btn-secondary full-btn" style="margin-top: 12px;" onclick="loadDemoArt()">
+                Restaurar artes demo
+              </button>
             </div>
 
-            <div class="dash-row">
-              <span>Órdenes pagadas</span>
-              <strong>128</strong>
+            <div class="admin-list">
+              <h3>Inventario actual</h3>
+              <div id="adminInventory"></div>
             </div>
-
-            <div class="dash-row">
-              <span>Participaciones activas</span>
-              <strong>352</strong>
-            </div>
-
-            <div class="dash-row">
-              <span>Total vendido</span>
-              <strong>$1,840</strong>
-            </div>
-
-            <div class="dash-row">
-              <span>Fecha del sorteo</span>
-              <strong>31 mayo</strong>
-            </div>
-
-            <div class="dash-row">
-              <span>Estado</span>
-              <strong style="color: var(--success);">Activo</strong>
-            </div>
-
-            <button class="btn btn-primary full-btn" style="margin-top: 12px;" onclick="demoWinner()">
-              Simular selección de ganador
-            </button>
           </div>
         </div>
       </div>
@@ -1096,15 +1173,14 @@
     <section class="cta-section">
       <div class="container">
         <div class="cta-box">
-          <h2>Listo para conectar pagos reales</h2>
+          <h2>Demo listo para presentar</h2>
           <p>
-            Esta demo puede evolucionar a una plataforma funcional con Stripe,
-            Firebase, panel administrativo, emails automáticos, códigos únicos
-            y selección de ganador.
+            El cliente puede ver cómo se añaden artes, cómo se controla inventario
+            y cómo la disponibilidad cambia cuando ocurre una compra.
           </p>
-          <button class="btn btn-primary" onclick="openModal('Demo Stripe Checkout', '10')">
-            Probar flujo de compra
-          </button>
+          <a href="#admin" class="btn btn-primary">
+            Probar panel admin
+          </a>
         </div>
       </div>
     </section>
@@ -1115,7 +1191,7 @@
     <div class="container">
       © 2026 ArteRaffle Demo. Plataforma demostrativa para venta de artes digitales y promociones.
       <br />
-      Desarrollado como demo profesional para presentación al cliente.
+      Demo visual preparado para presentación comercial.
     </div>
   </footer>
 
@@ -1124,7 +1200,7 @@
       <button class="close-modal" onclick="closeModal()">×</button>
 
       <h3 id="modalTitle">Comprar arte digital</h3>
-      <p>
+      <p id="modalDescription">
         Completa la información para simular el flujo. En la versión real,
         este botón enviaría al cliente a Stripe Checkout.
       </p>
@@ -1146,13 +1222,8 @@
         </div>
 
         <div class="form-group">
-          <label>Cantidad</label>
-          <select id="quantity">
-            <option value="1">1 compra</option>
-            <option value="2">2 compras</option>
-            <option value="3">3 compras</option>
-            <option value="5">5 compras</option>
-          </select>
+          <label>Cantidad a comprar</label>
+          <select id="quantity"></select>
         </div>
 
         <div class="notice">
@@ -1176,66 +1247,384 @@
   </div>
 
   <script>
-    let selectedProduct = "";
-    let selectedPrice = 0;
+    const STORAGE_KEY = "arteraffle_demo_artworks";
+    const SALES_KEY = "arteraffle_demo_sales";
+
+    let artworks = [];
+    let totalSales = 0;
+    let selectedArtId = null;
+
+    const defaultArtworks = [
+      {
+        id: crypto.randomUUID(),
+        title: "Neon Dreams",
+        description: "Pieza futurista en alta resolución con estilo neón, ideal para colección digital.",
+        price: 5,
+        stock: 15,
+        initialStock: 15,
+        entries: 1,
+        tag: "Arte Digital",
+        image: "https://images.unsplash.com/photo-1635322966219-b75ed372eb01?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Cosmic Flow",
+        description: "Arte abstracto con profundidad visual, colores vibrantes y acabado premium.",
+        price: 10,
+        stock: 10,
+        initialStock: 10,
+        entries: 3,
+        tag: "Colección",
+        image: "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&w=900&q=80"
+      },
+      {
+        id: crypto.randomUUID(),
+        title: "Golden Future",
+        description: "Arte digital premium con estilo elegante, detalles metálicos y descarga en alta calidad.",
+        price: 20,
+        stock: 7,
+        initialStock: 7,
+        entries: 7,
+        tag: "Premium",
+        image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=900&q=80"
+      }
+    ];
 
     function toggleMenu() {
       document.getElementById("navLinks").classList.toggle("active");
     }
 
-    function openModal(productName, price) {
-      selectedProduct = productName;
-      selectedPrice = Number(price);
+    function saveData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(artworks));
+      localStorage.setItem(SALES_KEY, String(totalSales));
+    }
 
-      document.getElementById("modalTitle").textContent = "Comprar: " + productName;
-      document.getElementById("modalPrice").textContent = selectedPrice.toFixed(2);
+    function loadData() {
+      const savedArtworks = localStorage.getItem(STORAGE_KEY);
+      const savedSales = localStorage.getItem(SALES_KEY);
+
+      if (savedArtworks) {
+        artworks = JSON.parse(savedArtworks);
+      } else {
+        artworks = defaultArtworks;
+        saveData();
+      }
+
+      totalSales = savedSales ? Number(savedSales) : 0;
+
+      renderAll();
+    }
+
+    function loadDemoArt() {
+      if (!confirm("¿Quieres restaurar las artes demo? Esto borrará cambios del demo actual.")) {
+        return;
+      }
+
+      artworks = defaultArtworks.map(item => ({
+        ...item,
+        id: crypto.randomUUID()
+      }));
+
+      totalSales = 0;
+      saveData();
+      renderAll();
+
+      alert("Artes demo restauradas.");
+    }
+
+    function renderAll() {
+      renderArtworks();
+      renderAdminInventory();
+      updateStats();
+    }
+
+    function renderArtworks() {
+      const grid = document.getElementById("artGrid");
+      grid.innerHTML = "";
+
+      if (artworks.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            Todavía no hay artes disponibles. Añade una desde el Panel Admin.
+          </div>
+        `;
+        return;
+      }
+
+      artworks.forEach(art => {
+        const stockClass = getStockClass(art.stock);
+        const stockText = getStockText(art.stock);
+        const isSoldOut = art.stock <= 0;
+
+        const card = document.createElement("article");
+        card.className = "art-card";
+
+        card.innerHTML = `
+          <div class="art-image" style="background-image: url('${art.image}');">
+            <div class="art-tag">${escapeHtml(art.tag)}</div>
+            <div class="stock-badge ${stockClass}">${stockText}</div>
+          </div>
+
+          <div class="art-content">
+            <h3>${escapeHtml(art.title)}</h3>
+            <p>${escapeHtml(art.description)}</p>
+
+            <div class="price-row">
+              <div class="price">$${Number(art.price).toFixed(2)}</div>
+              <div class="entries">${art.entries} participación(es)</div>
+            </div>
+
+            <button
+              class="btn btn-primary full-btn ${isSoldOut ? "disabled" : ""}"
+              onclick="openModal('${art.id}')"
+            >
+              ${isSoldOut ? "Agotado" : "Comprar con Stripe"}
+            </button>
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function renderAdminInventory() {
+      const inventory = document.getElementById("adminInventory");
+      inventory.innerHTML = "";
+
+      if (artworks.length === 0) {
+        inventory.innerHTML = `
+          <div class="empty-state">
+            No hay elementos en inventario.
+          </div>
+        `;
+        return;
+      }
+
+      artworks.forEach(art => {
+        const sold = Number(art.initialStock || 0) - Number(art.stock || 0);
+
+        const item = document.createElement("div");
+        item.className = "admin-item";
+
+        item.innerHTML = `
+          <div>
+            <h4>${escapeHtml(art.title)}</h4>
+            <p>
+              Precio: $${Number(art.price).toFixed(2)} |
+              Disponible: <strong style="color: var(--success);">${art.stock}</strong> |
+              Vendidos: ${sold < 0 ? 0 : sold}
+            </p>
+          </div>
+
+          <div class="admin-actions">
+            <button class="btn btn-secondary btn-small" onclick="increaseStock('${art.id}')">+ Stock</button>
+            <button class="btn btn-secondary btn-small" onclick="decreaseStock('${art.id}')">- Stock</button>
+            <button class="btn btn-danger btn-small" onclick="deleteArtwork('${art.id}')">Eliminar</button>
+          </div>
+        `;
+
+        inventory.appendChild(item);
+      });
+    }
+
+    function updateStats() {
+      const totalArts = artworks.length;
+      const totalAvailable = artworks.reduce((sum, art) => sum + Number(art.stock || 0), 0);
+      const totalInitial = artworks.reduce((sum, art) => sum + Number(art.initialStock || 0), 0);
+      const totalSold = Math.max(totalInitial - totalAvailable, 0);
+
+      document.getElementById("statTotalArts").textContent = totalArts;
+      document.getElementById("statAvailable").textContent = totalAvailable;
+      document.getElementById("statSold").textContent = totalSold;
+      document.getElementById("statSales").textContent = "$" + Number(totalSales).toFixed(2);
+    }
+
+    function getStockClass(stock) {
+      if (stock <= 0) return "sold";
+      if (stock <= 3) return "low";
+      return "";
+    }
+
+    function getStockText(stock) {
+      if (stock <= 0) return "Agotado";
+      if (stock === 1) return "Queda 1";
+      if (stock <= 3) return "Quedan " + stock;
+      return stock + " disponibles";
+    }
+
+    function openModal(artId) {
+      const art = artworks.find(item => item.id === artId);
+
+      if (!art) {
+        alert("Este arte no existe.");
+        return;
+      }
+
+      if (art.stock <= 0) {
+        alert("Este arte ya está agotado.");
+        return;
+      }
+
+      selectedArtId = artId;
+
+      document.getElementById("modalTitle").textContent = "Comprar: " + art.title;
+      document.getElementById("modalDescription").textContent =
+        "Disponible ahora: " + art.stock + ". En producción, este flujo se conectaría con Stripe Checkout.";
+
+      const quantitySelect = document.getElementById("quantity");
+      quantitySelect.innerHTML = "";
+
+      const maxQuantity = Math.min(art.stock, 10);
+
+      for (let i = 1; i <= maxQuantity; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = i + (i === 1 ? " unidad" : " unidades");
+        quantitySelect.appendChild(option);
+      }
+
+      document.getElementById("modalPrice").textContent = Number(art.price).toFixed(2);
       document.getElementById("purchaseModal").classList.add("active");
     }
 
     function closeModal() {
       document.getElementById("purchaseModal").classList.remove("active");
+      selectedArtId = null;
     }
 
     document.getElementById("quantity").addEventListener("change", function () {
+      const art = artworks.find(item => item.id === selectedArtId);
+
+      if (!art) return;
+
       const quantity = Number(this.value);
-      document.getElementById("modalPrice").textContent = (selectedPrice * quantity).toFixed(2);
+      const total = Number(art.price) * quantity;
+
+      document.getElementById("modalPrice").textContent = total.toFixed(2);
     });
 
     function fakeStripeCheckout(event) {
       event.preventDefault();
 
+      const art = artworks.find(item => item.id === selectedArtId);
+
+      if (!art) {
+        alert("No se encontró el arte seleccionado.");
+        return;
+      }
+
       const name = document.getElementById("customerName").value;
       const email = document.getElementById("customerEmail").value;
       const phone = document.getElementById("customerPhone").value;
       const quantity = Number(document.getElementById("quantity").value);
-      const total = selectedPrice * quantity;
 
+      if (quantity > art.stock) {
+        alert("No hay suficiente inventario disponible.");
+        return;
+      }
+
+      const total = Number(art.price) * quantity;
       const entryCode = "ART-" + Math.floor(100000 + Math.random() * 900000);
+
+      art.stock = Number(art.stock) - quantity;
+      totalSales += total;
+
+      saveData();
+      renderAll();
+      closeModal();
 
       alert(
         "DEMO STRIPE CHECKOUT\\n\\n" +
-        "Producto: " + selectedProduct + "\\n" +
+        "Producto: " + art.title + "\\n" +
         "Cliente: " + name + "\\n" +
         "Email: " + email + "\\n" +
         "Teléfono: " + phone + "\\n" +
-        "Cantidad: " + quantity + "\\n" +
+        "Cantidad comprada: " + quantity + "\\n" +
         "Total: $" + total.toFixed(2) + "\\n" +
         "Código demo: " + entryCode + "\\n\\n" +
-        "En la versión real, aquí se redirige a Stripe Checkout."
+        "Inventario actualizado. Ahora quedan " + art.stock + " disponible(s)."
       );
 
-      closeModal();
+      document.getElementById("customerName").value = "";
+      document.getElementById("customerEmail").value = "";
+      document.getElementById("customerPhone").value = "";
     }
 
-    function demoWinner() {
-      const fakeCodes = ["ART-482910", "ART-105882", "ART-778201", "ART-640992", "ART-349102"];
-      const winner = fakeCodes[Math.floor(Math.random() * fakeCodes.length)];
+    document.getElementById("adminForm").addEventListener("submit", function (event) {
+      event.preventDefault();
 
-      alert(
-        "Ganador seleccionado en demo:\\n\\n" +
-        winner + "\\n\\n" +
-        "En la versión real, el sistema escogería entre participaciones pagadas y confirmadas."
-      );
+      const title = document.getElementById("artTitle").value.trim();
+      const description = document.getElementById("artDescription").value.trim();
+      const price = Number(document.getElementById("artPrice").value);
+      const stock = Number(document.getElementById("artStock").value);
+      const entries = Number(document.getElementById("artEntries").value);
+      const tag = document.getElementById("artTag").value.trim();
+      const image = document.getElementById("artImage").value.trim();
+
+      if (!title || !description || !price || !stock || !entries || !tag || !image) {
+        alert("Completa todos los campos.");
+        return;
+      }
+
+      const newArt = {
+        id: crypto.randomUUID(),
+        title,
+        description,
+        price,
+        stock,
+        initialStock: stock,
+        entries,
+        tag,
+        image
+      };
+
+      artworks.unshift(newArt);
+
+      saveData();
+      renderAll();
+
+      this.reset();
+
+      alert("Arte añadido correctamente. Ya aparece en la galería.");
+    });
+
+    function increaseStock(id) {
+      const art = artworks.find(item => item.id === id);
+
+      if (!art) return;
+
+      art.stock = Number(art.stock) + 1;
+      art.initialStock = Number(art.initialStock || 0) + 1;
+
+      saveData();
+      renderAll();
+    }
+
+    function decreaseStock(id) {
+      const art = artworks.find(item => item.id === id);
+
+      if (!art) return;
+
+      if (art.stock <= 0) {
+        alert("Este arte ya está en 0.");
+        return;
+      }
+
+      art.stock = Number(art.stock) - 1;
+
+      saveData();
+      renderAll();
+    }
+
+    function deleteArtwork(id) {
+      if (!confirm("¿Seguro que quieres eliminar este arte del demo?")) {
+        return;
+      }
+
+      artworks = artworks.filter(item => item.id !== id);
+
+      saveData();
+      renderAll();
     }
 
     function updateCountdown() {
@@ -1259,15 +1648,23 @@
       document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
     }
 
-    updateCountdown();
-    setInterval(updateCountdown, 60000);
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
 
-    window.addEventListener("click", function (e) {
+    window.addEventListener("click", function (event) {
       const modal = document.getElementById("purchaseModal");
-      if (e.target === modal) {
+
+      if (event.target === modal) {
         closeModal();
       }
     });
+
+    loadData();
+    updateCountdown();
+    setInterval(updateCountdown, 60000);
   </script>
 
 </body>
